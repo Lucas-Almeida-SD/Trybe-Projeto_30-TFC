@@ -5,3 +5,7 @@ export const loginUserRepositoryFindOneResponse = {
   email: 'lucas@teste.com',
   password: 'mypassword',
 }
+
+export const nonExistingEmailLoginRequest = { password: "mypassword" }
+
+export const nonExistingPasswordLoginRequest = { email: "teste@teste" }
