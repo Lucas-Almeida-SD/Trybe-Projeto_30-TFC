@@ -16,6 +16,7 @@ const { expect } = chai;
 
 describe('Testes da rota "POST /login"', () => {
   let chaiHttpResponse: Response;
+  let errorMessage: { message: string };
 
   describe('Será validado que é possível realizar login', () => {
     before(async () => {
@@ -40,6 +41,25 @@ describe('Testes da rota "POST /login"', () => {
     it('Deve responder com um token no corpo da resposta', () => {
       expect(chaiHttpResponse.body).to.have.property('token');
       expect(chaiHttpResponse.body.token).to.be.a('string');
+    });
+  });
+
+  describe('Será validado que não é possível realizar login sem informar um email', () => {
+    before(async () => {  
+        chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send({ password: "mypassword" });
+    });
+
+    it('Deve responder com status code "400"', () => {
+      expect(chaiHttpResponse).to.have.status(400);
+    });
+
+    it('Deve responder com a mensagem de erro "All fields must be filled" no corpo da resposta', () => {
+      errorMessage = { message: 'All fields must be filled' };
+
+      expect(chaiHttpResponse.body).to.be.eqls(errorMessage);
     });
   });
 });
