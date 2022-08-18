@@ -3,11 +3,11 @@ import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
-import { app } from '../../../app';
+import { app } from '../app';
 
 import { Response } from 'superagent';
 
-import UserRepository from '../../../database/models/repository/User.repository';
+import UserRepository from '../database/models/repository/User.repository';
 
 chai.use(chaiHttp);
 
@@ -17,9 +17,9 @@ import {
   loginUserRequest,
   loginUserRepositoryFindOneResponse,
   loginValidateResponse,
-} from '../../mocks/dataMocks';
+} from './mocks/dataMocks';
 
-describe.only('Testes da rota "GET /login/validate"', () => {
+describe('Testes da rota "GET /login/validate"', () => {
   let chaiHttpResponse: Response;
   let errorMessage: { message: string };
 
