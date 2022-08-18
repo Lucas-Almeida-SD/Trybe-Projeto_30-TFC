@@ -1,40 +1,13 @@
-import { Model, INTEGER, STRING } from 'sequelize';
+import UserRepository from './repository/User.repository';
 import { UserDTO } from '../../interfaces/User.interface';
-import db from './index';
+import PersistenceUserModel from './PersistenceUserModel';
 
-class UserModel extends Model implements UserDTO {
-  id!: number;
-  username!: string;
-  role!: string;
-  email!: string;
-  password!: string;
+export default abstract class UserModel extends PersistenceUserModel {
+  public static async login(email: string): Promise<UserDTO> {
+    const user = await UserRepository.findOne({ where: { email } });
+
+    const newUser = user as UserDTO;
+
+    return newUser;
+  }
 }
-
-UserModel.init({
-  id: {
-    type: INTEGER,
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  username: {
-    type: STRING,
-    allowNull: false,
-  },
-  role: {
-    type: STRING,
-    allowNull: false,
-  },
-  email: {
-    type: STRING,
-    allowNull: false,
-  },
-  password: {
-    type: STRING,
-    allowNull: false,
-  },
-}, {
-  sequelize: db,
-  tableName: 'users',
-  timestamps: false,
-});
