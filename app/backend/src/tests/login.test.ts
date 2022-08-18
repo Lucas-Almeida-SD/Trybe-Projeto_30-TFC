@@ -7,11 +7,13 @@ import { app } from '../app';
 
 import { Response } from 'superagent';
 
-import { 
+import {
+  loginUserRequest,
   loginUserRepositoryFindOneResponse,
   nonExistingEmailLoginRequest,
   nonExistingPasswordLoginRequest,
   invalidEmailLoginRequest,
+  invalidPasswordLoginRequest,
 } from './mocks/dataMocks';
 
 import UserRepository from '../database/models/repository/User.repository';
@@ -33,7 +35,7 @@ describe('Testes da rota "POST /login"', () => {
       chaiHttpResponse = await chai
       .request(app)
       .post('/login')
-      .send({ email: "lucas@teste.com", password: "mypassword" });
+      .send(loginUserRequest);
     });
 
     after(() => {
@@ -94,6 +96,25 @@ describe('Testes da rota "POST /login"', () => {
         .request(app)
         .post('/login')
         .send(invalidEmailLoginRequest);
+    });
+
+    it('Deve responder com status code "401"', () => {
+      expect(chaiHttpResponse).to.have.status(401);
+    });
+
+    it('Deve responder com a mensagem de erro "Incorrect email or password" no corpo da resposta', () => {
+      errorMessage = { message: 'Incorrect email or password' };
+
+      expect(chaiHttpResponse.body).to.be.eqls(errorMessage);
+    });
+  });
+
+  describe('Será validado que não é possível realizar login com uma senha inválida', () => {
+    before(async () => {  
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send(invalidPasswordLoginRequest);
     });
 
     it('Deve responder com status code "401"', () => {
