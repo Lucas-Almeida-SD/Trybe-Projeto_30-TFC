@@ -1,5 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import * as Joi from 'joi';
+import * as bcrypt from 'bcryptjs';
 import throwMyErrorObject from '../helpers/throwMyErrorObject';
 import { ILogin } from '../interfaces/Login.interface';
 
@@ -23,7 +24,15 @@ const validateUserExistence = (user: object | null) => {
   }
 };
 
+const checkPassword = (password: string, hash: string) => {
+  const isValidPassword = bcrypt.compareSync(password, hash);
+  if (!isValidPassword) {
+    throwMyErrorObject('Incorrect email or password', StatusCodes.UNAUTHORIZED);
+  }
+};
+
 export default {
   validateLoginFields,
   validateUserExistence,
+  checkPassword,
 };
