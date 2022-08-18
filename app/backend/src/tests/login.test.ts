@@ -7,7 +7,11 @@ import { app } from '../app';
 
 import { Response } from 'superagent';
 
-import { loginUserRepositoryFindOneResponse } from './mocks/dataMocks';
+import { 
+  loginUserRepositoryFindOneResponse,
+  nonExistingEmailLoginRequest,
+  nonExistingPasswordLoginRequest,
+} from './mocks/dataMocks';
 import UserRepository from '../database/models/repository/User.repository';
 
 chai.use(chaiHttp);
@@ -24,14 +28,14 @@ describe('Testes da rota "POST /login"', () => {
         .stub(UserRepository, 'findOne')
         .resolves({ ...loginUserRepositoryFindOneResponse } as UserRepository);
       
-        chaiHttpResponse = await chai
-        .request(app)
-        .post('/login')
-        .send({ email: "lucas@teste.com", password: "mypassword" });
+      chaiHttpResponse = await chai
+      .request(app)
+      .post('/login')
+      .send({ email: "lucas@teste.com", password: "mypassword" });
     });
 
     after(() => {
-      (UserRepository.findOne as sinon.SinonStub).restore;
+      (UserRepository.findOne as sinon.SinonStub).restore();
     });
 
     it('Deve responder com status code "200"', () => {
@@ -46,10 +50,29 @@ describe('Testes da rota "POST /login"', () => {
 
   describe('Será validado que não é possível realizar login sem informar um email', () => {
     before(async () => {  
-        chaiHttpResponse = await chai
+      chaiHttpResponse = await chai
         .request(app)
         .post('/login')
-        .send({ password: "mypassword" });
+        .send(nonExistingEmailLoginRequest);
+    });
+
+    it('Deve responder com status code "400"', () => {
+      expect(chaiHttpResponse).to.have.status(400);
+    });
+
+    it('Deve responder com a mensagem de erro "All fields must be filled" no corpo da resposta', () => {
+      errorMessage = { message: 'All fields must be filled' };
+
+      expect(chaiHttpResponse.body).to.be.eqls(errorMessage);
+    });
+  });
+
+  describe('Será validado que não é possível realizar login sem informar uma senha', () => {
+    before(async () => {  
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send(nonExistingPasswordLoginRequest);
     });
 
     it('Deve responder com status code "400"', () => {
