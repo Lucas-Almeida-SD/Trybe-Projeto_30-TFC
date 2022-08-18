@@ -24,3 +24,7 @@ export const invalidPasswordLoginRequest = {
   email: "admin@admin.com",
   password: "invalidpassword"
 }
+
+export const loginValidateResponse = {
+  role: 'admin',
+}
