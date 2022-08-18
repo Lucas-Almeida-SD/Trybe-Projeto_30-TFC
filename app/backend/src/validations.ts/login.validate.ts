@@ -14,6 +14,16 @@ const validateLoginFields = (login: ILogin) => {
   }
 };
 
+const validateUserExistence = (user: object | null) => {
+  if (!user) {
+    return throwMyErrorObject(
+      'Incorrect email or password',
+      StatusCodes.UNAUTHORIZED,
+    );
+  }
+};
+
 export default {
   validateLoginFields,
+  validateUserExistence,
 };
