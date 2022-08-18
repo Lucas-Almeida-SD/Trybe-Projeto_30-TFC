@@ -9,3 +9,8 @@ export const loginUserRepositoryFindOneResponse = {
 export const nonExistingEmailLoginRequest = { password: "mypassword" }
 
 export const nonExistingPasswordLoginRequest = { email: "teste@teste" }
+
+export const invalidEmailLoginRequest = { 
+  email: "invalid@email.com",
+  password: "mypassword"
+}
