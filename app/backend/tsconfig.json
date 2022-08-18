@@ -5,6 +5,7 @@
     "sourceMap": true,                     
     "outDir": "./build",
     "rootDir": "./src",
+    "typeRoots": ["./types"],
     "strict": true,
     "moduleResolution": "node",
     "baseUrl": ".", 
@@ -15,7 +16,7 @@
     "strictPropertyInitialization": false,
     "skipLibCheck": true,
     "paths": {
-      "*": ["node_modules/*"]
+      "*": ["node_modules/*"],
     }
   },
   "include": ["src/**/*"],
