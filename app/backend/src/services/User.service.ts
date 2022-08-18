@@ -13,11 +13,15 @@ export default class UserService extends PersistenceUserService {
   public async login(login: ILogin): Promise<string> {
     loginValidate.validateLoginFields(login);
 
-    const user = await this.model.login(login.email);
+    let user = await this.model.login(login.email);
 
     loginValidate.validateUserExistence(user);
 
-    const token = generateToken(user as UserDTO);
+    user = user as UserDTO;
+
+    loginValidate.checkPassword(login.password, user.password);
+
+    const token = generateToken(user);
 
     return token;
   }
