@@ -12,4 +12,10 @@ export default class TeamService extends PersistenceTeamService {
 
     return teams;
   }
+
+  public async getById(id: number): Promise<TeamDTO> {
+    const team = await this.model.getById(id);
+
+    return team;
+  }
 }
