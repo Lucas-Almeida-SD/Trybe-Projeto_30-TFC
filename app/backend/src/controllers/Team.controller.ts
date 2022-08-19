@@ -21,4 +21,20 @@ export default class TeamController extends PersistenceTeamController {
       next(err);
     }
   };
+
+  public getById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    const id = req.params.id as string;
+
+    try {
+      const team = await this.service.getById(Number(id));
+
+      res.status(StatusCodes.OK).json(team);
+    } catch (err) {
+      next(err);
+    }
+  };
 }
