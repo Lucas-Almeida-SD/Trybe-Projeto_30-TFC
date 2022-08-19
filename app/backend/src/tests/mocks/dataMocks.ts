@@ -50,3 +50,65 @@ export const teamsGetAllResponse = [
     teamName: 'Botafogo',
   },
 ]
+
+export const matchesGetAllResponse = [
+  {
+    id: 1,
+    homeTeam: 1,
+    homeTeamGoals: 2,
+    awayTeam: 2,
+    awayTeamGoals: 3,
+    inProgress: false,
+    teamHome: {
+      teamName: "Avaí/Kindermann"
+    },
+    teamAway: {
+      teamName: "Bahia"
+    }
+  },
+  {
+    id: 2,
+    homeTeam: 1,
+    homeTeamGoals: 1,
+    awayTeam: 3,
+    awayTeamGoals: 0,
+    inProgress: true,
+    teamHome: {
+      teamName: "Avaí/Kindermann"
+    },
+    teamAway: {
+      teamName: "Botafogo"
+    }
+  },
+  {
+    id: 3,
+    homeTeam: 2,
+    homeTeamGoals: 3,
+    awayTeam: 3,
+    awayTeamGoals: 3,
+    inProgress: false,
+    teamHome: {
+      teamName: "Avaí/Kindermann"
+    },
+    teamAway: {
+      teamName: "Botafogo"
+    }
+  },
+]
+
+export const matchesGetAllByProgressEqualTrueResponse = [
+  {
+    id: 2,
+    homeTeam: 1,
+    homeTeamGoals: 1,
+    awayTeam: 3,
+    awayTeamGoals: 0,
+    inProgress: true,
+    teamHome: {
+      teamName: "Avaí/Kindermann"
+    },
+    teamAway: {
+      teamName: "Botafogo"
+    }
+  },
+]
