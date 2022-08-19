@@ -1,3 +1,6 @@
+//
+// users ---------------------------------------------------------------
+//
 export const loginUserRequest = {
   email: 'admin@admin.com',
   password: 'secret_admin',
@@ -28,3 +31,22 @@ export const invalidPasswordLoginRequest = {
 export const loginValidateResponse = {
   role: 'admin',
 }
+
+//
+// teams ---------------------------------------------------------------
+//
+
+export const teamsGetAllResponse = [
+  {
+    id: 1,
+    teamName: 'Avaí/Kindermann',
+  },
+  {
+    id: 2,
+    teamName: 'Bahia',
+  },
+  {
+    id: 3,
+    teamName: 'Botafogo',
+  },
+]
