@@ -1,6 +1,7 @@
 import MatchDTO, { MatchCreateRequest, MatchCreateResponse } from '../interfaces/Match.interface';
 import PersistenceMatchModel from '../database/models/PersistenceMatchModel';
 import PersistenceMatchService from './PersistenceMatchService';
+import matchesValidate from '../validations.ts/matches.validate';
 
 export default class MatchService extends PersistenceMatchService {
   constructor(private model: PersistenceMatchModel) {
@@ -20,6 +21,8 @@ export default class MatchService extends PersistenceMatchService {
   }
 
   public async create(match: MatchCreateRequest): Promise<MatchCreateResponse> {
+    matchesValidate.validateTeamsEquality(match.homeTeam, match.awayTeam);
+
     const createdMatch = await this.model.create(match);
 
     return createdMatch;
