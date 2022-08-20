@@ -40,4 +40,11 @@ export default abstract class MatchModel extends PersistenceMatchModel {
 
     return createdMatch;
   }
+
+  public static async editInProgressToFalse(id: number): Promise<void> {
+    await MatchRepository.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+  }
 }
