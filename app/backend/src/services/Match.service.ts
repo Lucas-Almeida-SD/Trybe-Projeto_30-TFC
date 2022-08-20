@@ -12,4 +12,10 @@ export default class MatchService extends PersistenceMatchService {
 
     return matches;
   }
+
+  public async getAllByInProgress(inProgress: boolean): Promise<Array<MatchDTO>> {
+    const matches = await this.model.getAllByInProgress(inProgress);
+
+    return matches;
+  }
 }
