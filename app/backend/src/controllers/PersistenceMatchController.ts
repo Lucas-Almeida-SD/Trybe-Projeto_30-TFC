@@ -16,4 +16,9 @@ export default abstract class PersistenceMatchController {
     req: Request,
     res: Response,
   ): Promise<void>;
+
+  abstract editInProgressToFalse(
+    req: Request,
+    res: Response,
+  ): Promise<void>;
 }
