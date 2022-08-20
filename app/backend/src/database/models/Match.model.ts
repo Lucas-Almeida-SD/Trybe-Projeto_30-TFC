@@ -14,4 +14,16 @@ export default abstract class MatchModel extends PersistenceMatchModel {
 
     return matches;
   }
+
+  public static async getAllByInProgress(inProgress: boolean): Promise<Array<MatchDTO>> {
+    const matches = await MatchRepository.findAll({
+      where: { inProgress },
+      include: [
+        { model: TeamRepository, as: 'teamHome', attributes: ['teamName'] },
+        { model: TeamRepository, as: 'teamAway', attributes: ['teamName'] },
+      ],
+    });
+
+    return matches;
+  }
 }
