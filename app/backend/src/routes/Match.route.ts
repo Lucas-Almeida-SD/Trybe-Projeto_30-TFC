@@ -11,5 +11,6 @@ const matchRoute = Router();
 
 matchRoute.get('/', controller.getAll, controller.getAllByInProgress);
 matchRoute.post('/', authentication, controller.create);
+matchRoute.patch('/:id/finish', controller.editInProgressToFalse);
 
 export default matchRoute;
