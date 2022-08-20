@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import PersistenceMatchController from './PersistenceMatchController';
 import PersistenceMatchService from '../services/PersistenceMatchService';
 
@@ -9,10 +9,27 @@ export default class MatchController extends PersistenceMatchController {
   }
 
   public getAll = async (
-    _req: Request,
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    const { inProgress } = req.query;
+
+    if (inProgress !== undefined) return next();
+
+    const matches = await this.service.getAll();
+
+    res.status(StatusCodes.OK).json(matches);
+  };
+
+  public getAllByInProgress = async (
+    req: Request,
     res: Response,
   ): Promise<void> => {
-    const matches = await this.service.getAll();
+    const { inProgress } = req.query;
+    const newInProgress = (inProgress === 'true');
+
+    const matches = await this.service.getAllByInProgress(newInProgress);
 
     res.status(StatusCodes.OK).json(matches);
   };
