@@ -33,6 +33,8 @@ MatchRepository.init({
       model: 'teams',
       key: 'id',
     },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   },
   homeTeamGoals: {
     type: INTEGER,
@@ -45,6 +47,8 @@ MatchRepository.init({
       model: 'teams',
       key: 'id',
     },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   },
   awayTeamGoals: {
     type: INTEGER,
