@@ -13,46 +13,65 @@ export default class MatchController extends PersistenceMatchController {
     res: Response,
     next: NextFunction,
   ): Promise<void> => {
-    const { inProgress } = req.query;
+    try {
+      const { inProgress } = req.query;
 
-    if (inProgress !== undefined) return next();
+      if (inProgress !== undefined) return next();
 
-    const matches = await this.service.getAll();
+      const matches = await this.service.getAll();
 
-    res.status(StatusCodes.OK).json(matches);
+      res.status(StatusCodes.OK).json(matches);
+    } catch (err) {
+      next(err);
+    }
   };
 
   public getAllByInProgress = async (
     req: Request,
     res: Response,
+    next: NextFunction,
   ): Promise<void> => {
-    const { inProgress } = req.query;
-    const newInProgress = (inProgress === 'true');
+    try {
+      const { inProgress } = req.query;
+      const newInProgress = (inProgress === 'true');
 
-    const matches = await this.service.getAllByInProgress(newInProgress);
+      const matches = await this.service.getAllByInProgress(newInProgress);
 
-    res.status(StatusCodes.OK).json(matches);
+      res.status(StatusCodes.OK).json(matches);
+    } catch (err) {
+      next(err);
+    }
   };
 
   public create = async (
     req: Request,
     res: Response,
+    next: NextFunction,
   ): Promise<void> => {
-    const match = req.body;
+    try {
+      const match = req.body;
 
-    const createdMatch = await this.service.create(match);
+      const createdMatch = await this.service.create(match);
 
-    res.status(StatusCodes.CREATED).json(createdMatch);
+      res.status(StatusCodes.CREATED).json(createdMatch);
+    } catch (err) {
+      next(err);
+    }
   };
 
   public editInProgressToFalse = async (
     req: Request,
     res: Response,
+    next: NextFunction,
   ): Promise<void> => {
-    const { id } = req.params;
+    try {
+      const { id } = req.params;
 
-    await this.service.editInProgressToFalse(Number(id));
+      await this.service.editInProgressToFalse(Number(id));
 
-    res.status(StatusCodes.OK).json({ message: 'Finished' });
+      res.status(StatusCodes.OK).json({ message: 'Finished' });
+    } catch (err) {
+      next(err);
+    }
   };
 }
