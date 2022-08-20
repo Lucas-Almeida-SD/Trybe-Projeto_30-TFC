@@ -33,4 +33,15 @@ export default class MatchController extends PersistenceMatchController {
 
     res.status(StatusCodes.OK).json(matches);
   };
+
+  public create = async (
+    req: Request,
+    res: Response,
+  ): Promise<void> => {
+    const match = req.body;
+
+    const createdMatch = await this.service.create(match);
+
+    res.status(StatusCodes.CREATED).json(createdMatch);
+  };
 }
