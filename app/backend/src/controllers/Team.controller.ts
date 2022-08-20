@@ -9,7 +9,7 @@ export default class TeamController extends PersistenceTeamController {
   }
 
   public getAll = async (
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction,
   ): Promise<void> => {
@@ -27,9 +27,9 @@ export default class TeamController extends PersistenceTeamController {
     res: Response,
     next: NextFunction,
   ): Promise<void> => {
-    const id = req.params.id as string;
-
     try {
+      const id = req.params.id as string;
+
       const team = await this.service.getById(Number(id));
 
       res.status(StatusCodes.OK).json(team);

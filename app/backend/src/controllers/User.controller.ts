@@ -9,9 +9,9 @@ export default class UserController extends PersistenceUserController {
   }
 
   public login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const login = req.body;
-
     try {
+      const login = req.body;
+
       const token = await this.service.login(login);
 
       res.status(StatusCodes.OK).json({ token });
