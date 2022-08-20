@@ -8,6 +8,6 @@ const controller = new MatchController(service);
 
 const matchRoute = Router();
 
-matchRoute.get('/', controller.getAll);
+matchRoute.get('/', controller.getAll, controller.getAllByInProgress);
 
 export default matchRoute;
