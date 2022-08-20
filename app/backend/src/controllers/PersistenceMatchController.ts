@@ -11,4 +11,9 @@ export default abstract class PersistenceMatchController {
     req: Request,
     res: Response,
   ): Promise<void>;
+
+  abstract create(
+    req: Request,
+    res: Response,
+  ): Promise<void>;
 }
