@@ -24,4 +24,8 @@ export default class MatchService extends PersistenceMatchService {
 
     return createdMatch;
   }
+
+  public async editInProgressToFalse(id: number): Promise<void> {
+    await this.model.editInProgressToFalse(id);
+  }
 }
