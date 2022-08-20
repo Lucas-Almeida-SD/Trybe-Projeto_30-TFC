@@ -11,6 +11,7 @@ import {
   createMatchWithInProgressEqualTrueRequest,
   createMatchWithInProgressEqualTrueResponse,
   loginUserRequest,
+  createMatchWithEqualTeamsRequest,
 } from './mocks/dataMocks';
 
 import MatchRepository from '../../src/database/models/repository/Match.repository';
@@ -21,6 +22,7 @@ const { expect } = chai;
 
 describe('Testes da rota "POST /matches"', () => {
   let chaiHttpResponse: Response;
+  let message: { message: string };
 
   describe('Será validado que é possível salvar uma partida com o status de inProgress como true no banco de dados ', () => {
 
@@ -29,10 +31,10 @@ describe('Testes da rota "POST /matches"', () => {
         .stub(MatchRepository, 'create')
         .resolves(createMatchWithInProgressEqualTrueResponse as MatchRepository);
     
-        let loginResponse = await chai
-        .request(app)
-        .post('/login')
-        .send(loginUserRequest);
+      let loginResponse = await chai
+      .request(app)
+      .post('/login')
+      .send(loginUserRequest);
       
       chaiHttpResponse = await chai
       .request(app)
@@ -51,6 +53,33 @@ describe('Testes da rota "POST /matches"', () => {
 
     it('Deve responder com um objeto contendo os dados da partida armazenada no corpo da resposta', () => {
       expect(chaiHttpResponse.body).to.be.eqls(createMatchWithInProgressEqualTrueResponse)
-    })
+    });
+  });
+
+  describe('Será validado que não é possível salvar uma partida com times iguais', () => {
+
+    before(async () => {
+    
+      let loginResponse = await chai
+      .request(app)
+      .post('/login')
+      .send(loginUserRequest);
+      
+      chaiHttpResponse = await chai
+      .request(app)
+      .post('/matches')
+      .set({ authorization: loginResponse.body.token })
+      .send(createMatchWithEqualTeamsRequest);
+    });
+
+    it('Deve responder com status code "401"', () => {
+      expect(chaiHttpResponse).to.have.status(401);
+    });
+
+    it('Deve responder com a mensagem "It is not possible to create a match with two equal teams" no corpo da resposta', () => {
+      message = { message: 'It is not possible to create a match with two equal teams' };
+
+      expect(chaiHttpResponse.body).to.be.eqls(message)
+    });
   });
 });
