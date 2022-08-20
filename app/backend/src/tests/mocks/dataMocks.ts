@@ -51,6 +51,10 @@ export const teamsGetAllResponse = [
   },
 ]
 
+//
+// matches ---------------------------------------------------------------
+//
+
 export const matchesGetAllResponse = [
   {
     id: 1,
@@ -158,4 +162,11 @@ export const createMatchWithInProgressEqualTrueResponse = {
   homeTeamGoals: 2,
   awayTeamGoals: 2,
   inProgress: true,
+}
+
+export const createMatchWithEqualTeamsRequest = {
+  homeTeam: 1,
+  awayTeam: 1, 
+  homeTeamGoals: 2,
+  awayTeamGoals: 2,
 }
