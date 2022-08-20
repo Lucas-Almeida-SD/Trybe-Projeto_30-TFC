@@ -44,4 +44,15 @@ export default class MatchController extends PersistenceMatchController {
 
     res.status(StatusCodes.CREATED).json(createdMatch);
   };
+
+  public editInProgressToFalse = async (
+    req: Request,
+    res: Response,
+  ): Promise<void> => {
+    const { id } = req.params;
+
+    await this.service.editInProgressToFalse(Number(id));
+
+    res.status(StatusCodes.OK).json({ message: 'Finished' });
+  };
 }
