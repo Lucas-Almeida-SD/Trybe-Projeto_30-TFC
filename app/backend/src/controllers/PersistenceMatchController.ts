@@ -10,15 +10,18 @@ export default abstract class PersistenceMatchController {
   abstract getAllByInProgress(
     req: Request,
     res: Response,
+    next: NextFunction,
   ): Promise<void>;
 
   abstract create(
     req: Request,
     res: Response,
+    next: NextFunction,
   ): Promise<void>;
 
   abstract editInProgressToFalse(
     req: Request,
     res: Response,
+    next: NextFunction,
   ): Promise<void>;
 }
