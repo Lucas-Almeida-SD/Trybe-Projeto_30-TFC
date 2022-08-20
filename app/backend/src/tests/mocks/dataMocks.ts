@@ -112,3 +112,34 @@ export const matchesGetAllByProgressEqualTrueResponse = [
     }
   },
 ]
+
+export const matchesGetAllByProgressEqualFalseResponse = [
+  {
+    id: 1,
+    homeTeam: 1,
+    homeTeamGoals: 2,
+    awayTeam: 2,
+    awayTeamGoals: 3,
+    inProgress: false,
+    teamHome: {
+      teamName: "Avaí/Kindermann"
+    },
+    teamAway: {
+      teamName: "Bahia"
+    }
+  },
+  {
+    id: 3,
+    homeTeam: 2,
+    homeTeamGoals: 3,
+    awayTeam: 3,
+    awayTeamGoals: 3,
+    inProgress: false,
+    teamHome: {
+      teamName: "Avaí/Kindermann"
+    },
+    teamAway: {
+      teamName: "Botafogo"
+    }
+  },
+]
