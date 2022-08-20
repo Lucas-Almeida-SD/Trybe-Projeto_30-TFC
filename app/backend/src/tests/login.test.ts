@@ -91,11 +91,17 @@ describe('Testes da rota "POST /login"', () => {
   });
 
   describe('Será validado que não é possível realizar login com um email inválido', () => {
-    before(async () => {  
+    before(async () => {
+      sinon.stub(UserRepository, 'findOne').resolves(null);
+
       chaiHttpResponse = await chai
         .request(app)
         .post('/login')
         .send(invalidEmailLoginRequest);
+    });
+
+    after(() => {
+      (UserRepository.findOne as sinon.SinonStub).restore();
     });
 
     it('Deve responder com status code "401"', () => {
@@ -110,11 +116,17 @@ describe('Testes da rota "POST /login"', () => {
   });
 
   describe('Será validado que não é possível realizar login com uma senha inválida', () => {
-    before(async () => {  
+    before(async () => {
+      sinon.stub(UserRepository, 'findOne').resolves(null);
+
       chaiHttpResponse = await chai
         .request(app)
         .post('/login')
         .send(invalidPasswordLoginRequest);
+    });
+
+    after(() => {
+      (UserRepository.findOne as sinon.SinonStub).restore();
     });
 
     it('Deve responder com status code "401"', () => {
