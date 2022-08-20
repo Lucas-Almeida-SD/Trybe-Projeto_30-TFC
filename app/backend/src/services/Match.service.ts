@@ -1,4 +1,4 @@
-import MatchDTO from '../interfaces/Match.interface';
+import MatchDTO, { MatchCreateRequest, MatchCreateResponse } from '../interfaces/Match.interface';
 import PersistenceMatchModel from '../database/models/PersistenceMatchModel';
 import PersistenceMatchService from './PersistenceMatchService';
 
@@ -17,5 +17,11 @@ export default class MatchService extends PersistenceMatchService {
     const matches = await this.model.getAllByInProgress(inProgress);
 
     return matches;
+  }
+
+  public async create(match: MatchCreateRequest): Promise<MatchCreateResponse> {
+    const createdMatch = await this.model.create(match);
+
+    return createdMatch;
   }
 }
