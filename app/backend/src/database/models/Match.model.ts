@@ -1,4 +1,7 @@
-import MatchDTO from '../../interfaces/Match.interface';
+import MatchDTO, {
+  MatchCreateRequest,
+  MatchCreateResponse,
+} from '../../interfaces/Match.interface';
 import PersistenceMatchModel from './PersistenceMatchModel';
 import MatchRepository from './repository/Match.repository';
 import TeamRepository from './repository/Team.repository';
@@ -25,5 +28,16 @@ export default abstract class MatchModel extends PersistenceMatchModel {
     });
 
     return matches;
+  }
+
+  public static async create(
+    match: MatchCreateRequest,
+  ): Promise<MatchCreateResponse> {
+    const createdMatch = await MatchRepository.create({
+      ...match,
+      inProgress: true,
+    });
+
+    return createdMatch;
   }
 }
