@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import { NextFunction, Request, Response } from 'express';
 import PersistenceMatchController from './PersistenceMatchController';
 import PersistenceMatchService from '../services/PersistenceMatchService';
+import { MatchTeamGoalsNumber } from '../interfaces/Match.interface';
 
 export default class MatchController extends PersistenceMatchController {
   constructor(private service: PersistenceMatchService) {
@@ -16,7 +17,7 @@ export default class MatchController extends PersistenceMatchController {
     try {
       const { inProgress } = req.query;
 
-      if (inProgress !== undefined) return next();
+      if (inProgress) return next();
 
       const matches = await this.service.getAll();
 
@@ -70,6 +71,23 @@ export default class MatchController extends PersistenceMatchController {
       await this.service.editInProgressToFalse(Number(id));
 
       res.status(StatusCodes.OK).json({ message: 'Finished' });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  public editGoalsNumber = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const { id } = req.params;
+      const teamGoals = req.body as MatchTeamGoalsNumber;
+
+      await this.service.editGoalsNumber(Number(id), teamGoals);
+
+      res.status(StatusCodes.OK).json('Number of goals edited!');
     } catch (err) {
       next(err);
     }
