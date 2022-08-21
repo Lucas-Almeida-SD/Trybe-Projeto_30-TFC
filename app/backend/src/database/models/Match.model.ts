@@ -1,6 +1,7 @@
 import MatchDTO, {
   MatchCreateRequest,
   MatchCreateResponse,
+  MatchTeamGoalsNumber,
 } from '../../interfaces/Match.interface';
 import PersistenceMatchModel from './PersistenceMatchModel';
 import MatchRepository from './repository/Match.repository';
@@ -44,6 +45,19 @@ export default abstract class MatchModel extends PersistenceMatchModel {
   public static async editInProgressToFalse(id: number): Promise<void> {
     await MatchRepository.update(
       { inProgress: false },
+      { where: { id } },
+    );
+  }
+
+  public static async editGoalsNumber(
+    id: number,
+    teamGoals: MatchTeamGoalsNumber,
+  ): Promise<void> {
+    await MatchRepository.update(
+      {
+        homeTeamGoals: teamGoals.homeTeamGoals,
+        awayTeamGoals: teamGoals.awayTeamGoals,
+      },
       { where: { id } },
     );
   }
