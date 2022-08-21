@@ -8,13 +8,15 @@ import { app } from '../app';
 import { Response } from 'superagent';
 
 import {
+  loginUserRequest,
   createMatchWithInProgressEqualTrueRequest,
   createMatchWithInProgressEqualTrueResponse,
-  loginUserRequest,
   createMatchWithEqualTeamsRequest,
+  loginUserRepositoryFindOneResponse,
 } from './mocks/dataMocks';
 
 import MatchRepository from '../../src/database/models/repository/Match.repository';
+import UserRepository from '../database/models/repository/User.repository';
 
 chai.use(chaiHttp);
 
@@ -27,6 +29,10 @@ describe('Testes da rota "POST /matches"', () => {
   describe('Será validado que é possível salvar uma partida com o status de inProgress como true no banco de dados ', () => {
 
     before(async () => {
+      sinon
+        .stub(UserRepository, 'findOne')
+        .resolves(loginUserRepositoryFindOneResponse as UserRepository);
+  
       sinon
         .stub(MatchRepository, 'create')
         .resolves(createMatchWithInProgressEqualTrueResponse as MatchRepository);
@@ -44,6 +50,7 @@ describe('Testes da rota "POST /matches"', () => {
     });
   
     after(() => {
+      (UserRepository.findOne as sinon.SinonStub).restore();
       (MatchRepository.create as sinon.SinonStub).restore();
     });
 
@@ -59,6 +66,9 @@ describe('Testes da rota "POST /matches"', () => {
   describe('Será validado que não é possível salvar uma partida com times iguais', () => {
 
     before(async () => {
+      sinon
+        .stub(UserRepository, 'findOne')
+        .resolves(loginUserRepositoryFindOneResponse as UserRepository);
     
       let loginResponse = await chai
       .request(app)
@@ -70,6 +80,10 @@ describe('Testes da rota "POST /matches"', () => {
       .post('/matches')
       .set({ authorization: loginResponse.body.token })
       .send(createMatchWithEqualTeamsRequest);
+    });
+
+    after(() => {
+      (UserRepository.findOne as sinon.SinonStub).restore();
     });
 
     it('Deve responder com status code "401"', () => {
