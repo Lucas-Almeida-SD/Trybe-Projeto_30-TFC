@@ -2,9 +2,13 @@ import MatchDTO, { MatchCreateRequest, MatchCreateResponse } from '../interfaces
 import PersistenceMatchModel from '../database/models/PersistenceMatchModel';
 import PersistenceMatchService from './PersistenceMatchService';
 import matchesValidate from '../validations.ts/matches.validate';
+import PersistenceTeamModel from '../database/models/PersistenceTeamModel';
 
 export default class MatchService extends PersistenceMatchService {
-  constructor(private model: PersistenceMatchModel) {
+  constructor(
+    private model: PersistenceMatchModel,
+    private teamModel: PersistenceTeamModel,
+  ) {
     super();
   }
 
@@ -22,6 +26,10 @@ export default class MatchService extends PersistenceMatchService {
 
   public async create(match: MatchCreateRequest): Promise<MatchCreateResponse> {
     matchesValidate.validateTeamsEquality(match.homeTeam, match.awayTeam);
+
+    const teams = await this.teamModel.getAll();
+
+    matchesValidate.validateTeamsExistence(teams, match.homeTeam, match.awayTeam);
 
     const createdMatch = await this.model.create(match);
 
