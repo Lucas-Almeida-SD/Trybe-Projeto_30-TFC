@@ -24,4 +24,10 @@ export default abstract class PersistenceMatchController {
     res: Response,
     next: NextFunction,
   ): Promise<void>;
+
+  abstract editGoalsNumber(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void>;
 }
