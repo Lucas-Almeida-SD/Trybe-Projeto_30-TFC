@@ -83,8 +83,8 @@ describe('Testes da rota "GET /login/validate"', () => {
       expect(chaiHttpResponse).to.have.status(401);
     });
 
-    it('Deve responder com a mensagem de erro "Expired or invalid token" no corpo da resposta', () => {
-      errorMessage = { message: 'Expired or invalid token' };
+    it('Deve responder com a mensagem de erro "Token must be a valid token', () => {
+      errorMessage = { message: 'Token must be a valid token' };
 
       expect(chaiHttpResponse.body).to.be.eqls(errorMessage);
     });
