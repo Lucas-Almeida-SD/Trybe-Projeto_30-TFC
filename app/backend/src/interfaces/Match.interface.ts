@@ -1,8 +1,11 @@
-export interface MatchCreateRequest {
-  homeTeam: number;
+export interface MatchTeamGoalsNumber {
   homeTeamGoals: number;
-  awayTeam: number;
   awayTeamGoals: number;
+}
+
+export interface MatchCreateRequest extends MatchTeamGoalsNumber {
+  homeTeam: number;
+  awayTeam: number;
 }
 
 export interface MatchCreateResponse extends MatchCreateRequest {
