@@ -12,6 +12,6 @@ export default (token: string) => {
     const decode = jwt.verify(token, JWT_SECRET);
     return decode;
   } catch (err) {
-    throwMyErrorObject('Expired or invalid token', StatusCodes.UNAUTHORIZED);
+    throwMyErrorObject('Token must be a valid token', StatusCodes.UNAUTHORIZED);
   }
 };
