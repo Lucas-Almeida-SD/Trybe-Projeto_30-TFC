@@ -1,4 +1,8 @@
-import MatchDTO, { MatchCreateRequest, MatchCreateResponse } from '../interfaces/Match.interface';
+import MatchDTO, {
+  MatchCreateRequest,
+  MatchCreateResponse,
+  MatchTeamGoalsNumber,
+} from '../interfaces/Match.interface';
 import PersistenceMatchModel from '../database/models/PersistenceMatchModel';
 import PersistenceMatchService from './PersistenceMatchService';
 import matchesValidate from '../validations.ts/matches.validate';
@@ -38,5 +42,12 @@ export default class MatchService extends PersistenceMatchService {
 
   public async editInProgressToFalse(id: number): Promise<void> {
     await this.model.editInProgressToFalse(id);
+  }
+
+  public async editGoalsNumber(
+    id: number,
+    teamGoals: MatchTeamGoalsNumber,
+  ): Promise<void> {
+    await this.model.editGoalsNumber(id, teamGoals);
   }
 }
