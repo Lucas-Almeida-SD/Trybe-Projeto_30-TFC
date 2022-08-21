@@ -3,8 +3,9 @@ import MatchModel from '../database/models/Match.model';
 import MatchService from '../services/Match.service';
 import MatchController from '../controllers/Match.controller';
 import authentication from '../middlewares/authentication';
+import TeamModel from '../database/models/Team.model';
 
-const service = new MatchService(MatchModel);
+const service = new MatchService(MatchModel, TeamModel);
 const controller = new MatchController(service);
 
 const matchRoute = Router();
