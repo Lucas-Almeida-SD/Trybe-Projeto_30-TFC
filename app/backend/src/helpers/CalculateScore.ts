@@ -151,18 +151,27 @@ export default abstract class CalculateLeaderboards {
     return efficiency;
   }
 
+  private static totalPointsCondition(
+    nextLeaderboard: LeaderboardDTO,
+    prevLeaderboard: LeaderboardDTO,
+  ): boolean {
+    return nextLeaderboard.totalPoints > prevLeaderboard.totalPoints;
+  }
+
   private static victoriesCondition(
     nextLeaderboard: LeaderboardDTO,
     prevLeaderboard: LeaderboardDTO,
   ): boolean {
-    return nextLeaderboard.totalVictories > prevLeaderboard.totalVictories;
+    return nextLeaderboard.totalPoints === prevLeaderboard.totalPoints
+      && nextLeaderboard.totalVictories > prevLeaderboard.totalVictories;
   }
 
   private static goalsBalanceCondition(
     nextLeaderboard: LeaderboardDTO,
     prevLeaderboard: LeaderboardDTO,
   ): boolean {
-    return (nextLeaderboard.totalVictories === prevLeaderboard.totalVictories
+    return (nextLeaderboard.totalPoints === prevLeaderboard.totalPoints
+      && nextLeaderboard.totalVictories === prevLeaderboard.totalVictories
         && nextLeaderboard.goalsBalance > prevLeaderboard.goalsBalance
     );
   }
@@ -171,7 +180,8 @@ export default abstract class CalculateLeaderboards {
     nextLeaderboard: LeaderboardDTO,
     prevLeaderboard: LeaderboardDTO,
   ): boolean {
-    return (nextLeaderboard.totalVictories === prevLeaderboard.totalVictories
+    return (nextLeaderboard.totalPoints === prevLeaderboard.totalPoints
+        && nextLeaderboard.totalVictories === prevLeaderboard.totalVictories
         && nextLeaderboard.goalsBalance === prevLeaderboard.goalsBalance
         && nextLeaderboard.goalsFavor > prevLeaderboard.goalsFavor
     );
@@ -181,7 +191,8 @@ export default abstract class CalculateLeaderboards {
     nextLeaderboard: LeaderboardDTO,
     prevLeaderboard: LeaderboardDTO,
   ): boolean {
-    return (nextLeaderboard.totalVictories === prevLeaderboard.totalVictories
+    return (nextLeaderboard.totalPoints === prevLeaderboard.totalPoints
+        && nextLeaderboard.totalVictories === prevLeaderboard.totalVictories
         && nextLeaderboard.goalsBalance === prevLeaderboard.goalsBalance
         && nextLeaderboard.goalsFavor === prevLeaderboard.goalsFavor
         && nextLeaderboard.goalsOwn < prevLeaderboard.goalsOwn
@@ -192,12 +203,14 @@ export default abstract class CalculateLeaderboards {
     leaderboardList: Array<LeaderboardDTO>,
   ): Array<LeaderboardDTO> {
     return leaderboardList.sort((next, prev) => {
+      const totalPointsCondition = CalculateLeaderboards.totalPointsCondition(next, prev);
       const victoriesCondition = CalculateLeaderboards.victoriesCondition(next, prev);
       const goalsBalanceCondition = CalculateLeaderboards.goalsBalanceCondition(next, prev);
       const goalsFavorCondition = CalculateLeaderboards.goalsFavorCondition(next, prev);
       const goalsOwnCondition = CalculateLeaderboards.goalsOwnCondition(next, prev);
       if (
-        victoriesCondition
+        totalPointsCondition
+        || victoriesCondition
         || goalsBalanceCondition
         || goalsFavorCondition
         || goalsOwnCondition) {
