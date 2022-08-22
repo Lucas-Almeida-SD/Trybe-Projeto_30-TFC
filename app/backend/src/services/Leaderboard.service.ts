@@ -15,4 +15,12 @@ export default class LeaderboardService extends PersistenceLeaderboardService {
 
     return leaderboard;
   }
+
+  public async getAllByAwayTeam(): Promise<Array<LeaderboardDTO>> {
+    const matches = await this.model.getAllMatches();
+
+    const leaderboard = CalculateLeaderboards.leaderboardList('teamAway', matches);
+
+    return leaderboard;
+  }
 }
