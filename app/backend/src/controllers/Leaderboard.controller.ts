@@ -21,4 +21,18 @@ export default class LeaderboardController extends PersistenceLeaderboardControl
       next(err);
     }
   };
+
+  public getAllByAwayTeam = async (
+    _req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const leaderboardList = await this.service.getAllByAwayTeam();
+
+      res.status(StatusCodes.OK).json(leaderboardList);
+    } catch (err) {
+      next(err);
+    }
+  };
 }
