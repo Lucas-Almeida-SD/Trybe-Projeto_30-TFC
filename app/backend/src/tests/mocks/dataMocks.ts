@@ -72,16 +72,16 @@ export const matchesGetAllResponse = [
   },
   {
     id: 2,
-    homeTeam: 1,
+    homeTeam: 3,
     homeTeamGoals: 1,
-    awayTeam: 3,
+    awayTeam: 1,
     awayTeamGoals: 0,
     inProgress: true,
     teamHome: {
-      teamName: "Avaí/Kindermann"
+      teamName: "Botafogo"
     },
     teamAway: {
-      teamName: "Botafogo"
+      teamName: "Avaí/Kindermann"
     }
   },
   {
@@ -92,7 +92,7 @@ export const matchesGetAllResponse = [
     awayTeamGoals: 3,
     inProgress: false,
     teamHome: {
-      teamName: "Avaí/Kindermann"
+      teamName: "Bahia"
     },
     teamAway: {
       teamName: "Botafogo"
@@ -103,16 +103,16 @@ export const matchesGetAllResponse = [
 export const matchesGetAllByProgressEqualTrueResponse = [
   {
     id: 2,
-    homeTeam: 1,
+    homeTeam: 3,
     homeTeamGoals: 1,
-    awayTeam: 3,
+    awayTeam: 1,
     awayTeamGoals: 0,
     inProgress: true,
     teamHome: {
-      teamName: "Avaí/Kindermann"
+      teamName: "Botafogo"
     },
     teamAway: {
-      teamName: "Botafogo"
+      teamName: "Avaí/Kindermann"
     }
   },
 ]
@@ -140,7 +140,7 @@ export const matchesGetAllByProgressEqualFalseResponse = [
     awayTeamGoals: 3,
     inProgress: false,
     teamHome: {
-      teamName: "Avaí/Kindermann"
+      teamName: "Bahia"
     },
     teamAway: {
       teamName: "Botafogo"
@@ -170,3 +170,34 @@ export const createMatchWithEqualTeamsRequest = {
   homeTeamGoals: 2,
   awayTeamGoals: 2,
 }
+
+//
+// leaderboard ---------------------------------------------------------------
+//
+
+export const leaderboardGetAllByHomeTeamResponse = [
+  {
+    name: 'Bahia',
+    totalPoints: 1,
+    totalGames: 1,
+    totalVictories: 0,
+    totalDraws: 1,
+    totalLosses: 0,
+    goalsFavor: 3,
+    goalsOwn: 3,
+    goalsBalance: 0,
+    efficiency: '33.33'
+  },
+  {
+    name: 'Avaí/Kindermann',
+    totalPoints: 0,
+    totalGames: 1,
+    totalVictories: 0,
+    totalDraws: 0,
+    totalLosses: 1,
+    goalsFavor: 2,
+    goalsOwn: 3,
+    goalsBalance: -1,
+    efficiency: '0.00'
+  }
+]
