@@ -9,7 +9,7 @@ export default class LeaderboardService extends PersistenceLeaderboardService {
   }
 
   public async getAllByHomeTeam(): Promise<Array<LeaderboardDTO>> {
-    const matches = await this.model.getAllByHomeTeam();
+    const matches = await this.model.getAllMatches();
 
     const leaderboard = CalculateLeaderboards.leaderboardList('teamHome', matches);
 
