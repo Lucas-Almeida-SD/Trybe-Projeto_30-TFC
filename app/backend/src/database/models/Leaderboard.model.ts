@@ -4,7 +4,7 @@ import MatchRepository from './repository/Match.repository';
 import TeamRepository from './repository/Team.repository';
 
 export default abstract class LeaderboardModel extends PersistenceLeaderboardModel {
-  public static async getAllByHomeTeam(): Promise<Array<MatchDTO>> {
+  public static async getAllMatches(): Promise<Array<MatchDTO>> {
     const matches = await MatchRepository.findAll({
       where: { inProgress: false },
       include: [
