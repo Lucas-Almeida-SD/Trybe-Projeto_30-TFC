@@ -35,4 +35,18 @@ export default class LeaderboardController extends PersistenceLeaderboardControl
       next(err);
     }
   };
+
+  public getAllByGeneralTeam = async (
+    _req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const leaderboardList = await this.service.getAllByGeneralTeam();
+
+      res.status(StatusCodes.OK).json(leaderboardList);
+    } catch (err) {
+      next(err);
+    }
+  };
 }
