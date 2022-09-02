@@ -14,18 +14,18 @@ export const loginUserRepositoryFindOneResponse = {
   password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW',
 }
 
-export const nonExistingEmailLoginRequest = { password: "mypassword" }
+export const nonExistingEmailLoginRequest = { password: 'mypassword' }
 
-export const nonExistingPasswordLoginRequest = { email: "teste@teste" }
+export const nonExistingPasswordLoginRequest = { email: 'teste@teste' }
 
 export const invalidEmailLoginRequest = { 
-  email: "invalid@email.com",
-  password: "secret_admin"
+  email: 'invalid@email.com',
+  password: 'secret_admin'
 }
 
 export const invalidPasswordLoginRequest = { 
-  email: "admin@admin.com",
-  password: "invalidpassword"
+  email: 'admin@admin.com',
+  password: 'invalidpassword'
 }
 
 export const loginValidateResponse = {
@@ -64,10 +64,10 @@ export const matchesGetAllResponse = [
     awayTeamGoals: 3,
     inProgress: false,
     teamHome: {
-      teamName: "Avaí/Kindermann"
+      teamName: 'Avaí/Kindermann'
     },
     teamAway: {
-      teamName: "Bahia"
+      teamName: 'Bahia'
     }
   },
   {
@@ -78,10 +78,10 @@ export const matchesGetAllResponse = [
     awayTeamGoals: 0,
     inProgress: true,
     teamHome: {
-      teamName: "Botafogo"
+      teamName: 'Botafogo'
     },
     teamAway: {
-      teamName: "Avaí/Kindermann"
+      teamName: 'Avaí/Kindermann'
     }
   },
   {
@@ -92,10 +92,10 @@ export const matchesGetAllResponse = [
     awayTeamGoals: 3,
     inProgress: false,
     teamHome: {
-      teamName: "Bahia"
+      teamName: 'Bahia'
     },
     teamAway: {
-      teamName: "Botafogo"
+      teamName: 'Botafogo'
     }
   },
 ]
@@ -109,10 +109,10 @@ export const matchesGetAllByProgressEqualTrueResponse = [
     awayTeamGoals: 0,
     inProgress: true,
     teamHome: {
-      teamName: "Botafogo"
+      teamName: 'Botafogo'
     },
     teamAway: {
-      teamName: "Avaí/Kindermann"
+      teamName: 'Avaí/Kindermann'
     }
   },
 ]
@@ -126,10 +126,24 @@ export const matchesGetAllByProgressEqualFalseResponse = [
     awayTeamGoals: 3,
     inProgress: false,
     teamHome: {
-      teamName: "Avaí/Kindermann"
+      teamName: 'Avaí/Kindermann'
     },
     teamAway: {
-      teamName: "Bahia"
+      teamName: 'Bahia'
+    }
+  },
+  {
+    id: 2,
+    homeTeam: 3,
+    homeTeamGoals: 1,
+    awayTeam: 1,
+    awayTeamGoals: 0,
+    inProgress: false,
+    teamHome: {
+      teamName: 'Botafogo'
+    },
+    teamAway: {
+      teamName: 'Avaí/Kindermann'
     }
   },
   {
@@ -140,10 +154,10 @@ export const matchesGetAllByProgressEqualFalseResponse = [
     awayTeamGoals: 3,
     inProgress: false,
     teamHome: {
-      teamName: "Bahia"
+      teamName: 'Bahia'
     },
     teamAway: {
-      teamName: "Botafogo"
+      teamName: 'Botafogo'
     }
   },
 ]
@@ -184,27 +198,78 @@ export const createMatchWithNonExistentRequest = {
 
 export const leaderboardGetAllByHomeTeamResponse = [
   {
-    name: 'Bahia',
-    totalPoints: 1,
+    efficiency: '100.00',
+    goalsBalance: 1,
+    goalsFavor: 1,
+    goalsOwn: 0,
+    name: 'Botafogo',
+    totalDraws: 0,
     totalGames: 1,
-    totalVictories: 0,
-    totalDraws: 1,
     totalLosses: 0,
-    goalsFavor: 3,
-    goalsOwn: 3,
-    goalsBalance: 0,
-    efficiency: '33.33'
+    totalPoints: 3,
+    totalVictories: 1,
   },
   {
-    name: 'Avaí/Kindermann',
-    totalPoints: 0,
+   efficiency: '33.33',
+    goalsBalance: 0,
+    goalsFavor: 3,
+    goalsOwn: 3,
+    name: 'Bahia',
+    totalDraws: 1,
     totalGames: 1,
+    totalLosses: 0,
+    totalPoints: 1,
     totalVictories: 0,
-    totalDraws: 0,
-    totalLosses: 1,
+  },
+  {
+    efficiency: '0.00',
+    goalsBalance: -1,
     goalsFavor: 2,
     goalsOwn: 3,
+    name: 'Avaí/Kindermann',
+    totalDraws: 0,
+    totalGames: 1,
+    totalLosses: 1,
+    totalPoints: 0,
+    totalVictories: 0,
+},
+]
+
+export const leaderboardGetAllByAwayTeamResponse = [
+  {
+    efficiency: '100.00',
+    goalsBalance: 1,
+    goalsFavor: 3,
+    goalsOwn: 2,
+    name: 'Bahia',
+    totalDraws: 0,
+    totalGames: 1,
+    totalLosses: 0,
+    totalPoints: 3,
+    totalVictories: 1,
+  },
+  {
+    efficiency: '33.33',
+    goalsBalance: 0,
+    goalsFavor: 3,
+    goalsOwn: 3,
+    name: 'Botafogo',
+    totalDraws: 1,
+    totalGames: 1,
+    totalLosses: 0,
+    totalPoints: 1,
+    totalVictories: 0,
+  },
+  {
+    efficiency: '0.00',
     goalsBalance: -1,
-    efficiency: '0.00'
+    goalsFavor: 0,
+    goalsOwn: 1,
+    name: 'Avaí/Kindermann',
+    totalDraws: 0,
+    totalGames: 1,
+    totalLosses: 1,
+    totalPoints: 0,
+    totalVictories: 0,
   }
 ]
