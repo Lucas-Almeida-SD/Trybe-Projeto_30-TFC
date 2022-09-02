@@ -171,6 +171,13 @@ export const createMatchWithEqualTeamsRequest = {
   awayTeamGoals: 2,
 }
 
+export const createMatchWithNonExistentRequest = {
+  homeTeam: 1,
+  awayTeam: 9999, 
+  homeTeamGoals: 2,
+  awayTeamGoals: 2,
+}
+
 //
 // leaderboard ---------------------------------------------------------------
 //
