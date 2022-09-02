@@ -141,4 +141,26 @@ describe('Testes da rota "POST /matches"', () => {
       expect(chaiHttpResponse.body).to.be.eqls(message)
     });
   });
+
+  describe('Será validado que não é possível inserir uma partida sem um token válido', () => {
+
+    before( async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/matches')
+        .set({ authorization: 'invalidToken' })
+        .send(createMatchWithInProgressEqualTrueRequest)
+    });
+
+    it('Deve responder com status code "401"', () => {
+      expect(chaiHttpResponse).to.have.status(401);
+    });
+
+    it('Deve responder com a mensagem "Token must be a valid token" no corpo da resposta', () => {
+      message = { message: 'Token must be a valid token' };
+
+      expect(chaiHttpResponse.body).to.be.eqls(message)
+    });
+  });
 });
+
