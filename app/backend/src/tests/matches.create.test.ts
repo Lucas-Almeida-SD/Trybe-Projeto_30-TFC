@@ -13,10 +13,12 @@ import {
   createMatchWithInProgressEqualTrueResponse,
   createMatchWithEqualTeamsRequest,
   loginUserRepositoryFindOneResponse,
+  teamsGetAllResponse,
 } from './mocks/dataMocks';
 
 import MatchRepository from '../../src/database/models/repository/Match.repository';
 import UserRepository from '../database/models/repository/User.repository';
+import TeamRepository from '../database/models/repository/Team.repository';
 
 chai.use(chaiHttp);
 
@@ -32,6 +34,9 @@ describe('Testes da rota "POST /matches"', () => {
       sinon
         .stub(UserRepository, 'findOne')
         .resolves(loginUserRepositoryFindOneResponse as UserRepository);
+
+      sinon
+        .stub(TeamRepository, 'findAll').resolves(teamsGetAllResponse as Array<TeamRepository>);
   
       sinon
         .stub(MatchRepository, 'create')
@@ -51,6 +56,7 @@ describe('Testes da rota "POST /matches"', () => {
   
     after(() => {
       (UserRepository.findOne as sinon.SinonStub).restore();
+      (TeamRepository.findAll as sinon.SinonStub).restore();
       (MatchRepository.create as sinon.SinonStub).restore();
     });
 
