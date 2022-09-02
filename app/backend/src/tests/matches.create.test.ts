@@ -14,6 +14,7 @@ import {
   createMatchWithEqualTeamsRequest,
   loginUserRepositoryFindOneResponse,
   teamsGetAllResponse,
+  createMatchWithNonExistentRequest,
 } from './mocks/dataMocks';
 
 import MatchRepository from '../../src/database/models/repository/Match.repository';
@@ -98,6 +99,44 @@ describe('Testes da rota "POST /matches"', () => {
 
     it('Deve responder com a mensagem "It is not possible to create a match with two equal teams" no corpo da resposta', () => {
       message = { message: 'It is not possible to create a match with two equal teams' };
+
+      expect(chaiHttpResponse.body).to.be.eqls(message)
+    });
+  });
+
+  describe('Será validado que não é possível salvar uma partida com time que não existe na tabela de times', () => {
+
+    before(async () => {
+      sinon
+      .stub(UserRepository, 'findOne')
+      .resolves(loginUserRepositoryFindOneResponse as UserRepository);
+
+    sinon
+      .stub(TeamRepository, 'findAll').resolves(teamsGetAllResponse as Array<TeamRepository>);
+    
+    let loginResponse = await chai
+    .request(app)
+    .post('/login')
+    .send(loginUserRequest);
+    
+    chaiHttpResponse = await chai
+    .request(app)
+    .post('/matches')
+    .set({ authorization: loginResponse.body.token })
+    .send(createMatchWithNonExistentRequest);
+    });
+
+    after(() => {
+      (UserRepository.findOne as sinon.SinonStub).restore();
+      (TeamRepository.findAll as sinon.SinonStub).restore();
+    });
+
+    it('Deve responder com status code "404"', () => {
+      expect(chaiHttpResponse).to.have.status(404);
+    });
+
+    it('Deve responder com a mensagem "There is no team with such id!" no corpo da resposta', () => {
+      message = { message: 'There is no team with such id!' };
 
       expect(chaiHttpResponse.body).to.be.eqls(message)
     });
